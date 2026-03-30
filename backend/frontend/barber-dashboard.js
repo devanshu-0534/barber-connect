@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- Service Management (Data-Persistent) ---
     const fetchAndRenderServices = async () => {
         try {
-            const response = await fetch('http://localhost:5000/api/services', {
+            const response = await fetch('https://barber-connect-054c.onrender.com/api/services', {
                 headers: { 'Authorization': `Bearer ${barberToken}` }
             });
             const data = await response.json();
@@ -114,8 +114,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const serviceDuration = document.getElementById('service-duration').value;
 
         const url = editingServiceId 
-            ? `http://localhost:5000/api/services/${editingServiceId}`
-            : 'http://localhost:5000/api/services';
+            ? `https://barber-connect-054c.onrender.com/api/services/${editingServiceId}`
+            : 'https://barber-connect-054c.onrender.com/api/services';
         const method = editingServiceId ? 'PUT' : 'POST';
 
         try {
@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const serviceId = rowToDelete.dataset.id;
             if (confirm('Are you sure you want to delete this service?')) {
                 try {
-                    const response = await fetch(`http://localhost:5000/api/services/${serviceId}`, {
+                    const response = await fetch(`https://barber-connect-054c.onrender.com/api/services/${serviceId}`, {
                         method: 'DELETE',
                         headers: { 'Authorization': `Bearer ${barberToken}` }
                     });
@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!appointmentDateInput || !appointmentListContainer) return;
         const selectedDate = appointmentDateInput.value || new Date().toISOString().split('T')[0];
         try {
-            const response = await fetch(`http://localhost:5000/api/appointments/barber?date=${selectedDate}`, {
+            const response = await fetch(`https://barber-connect-054c.onrender.com/api/appointments/barber?date=${selectedDate}`, {
                 headers: { 'Authorization': `Bearer ${barberToken}` }
             });
             const data = await response.json();

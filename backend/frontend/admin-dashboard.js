@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const fetchPendingBarbers = async () => {
         try {
-            const response = await fetch('http://localhost:5000/api/admin/pending-barbers', {
+            const response = await fetch('https://barber-connect-054c.onrender.com/api/admin/pending-barbers', {
                 headers: { 'Authorization': `Bearer ${adminToken}` }
             });
 
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // NEW: Function to handle status updates
     const handleStatusUpdate = async (barberId, newStatus) => {
         try {
-            const response = await fetch(`http://localhost:5000/api/admin/barbers/${barberId}`, {
+            const response = await fetch(`https://barber-connect-054c.onrender.com/api/admin/barbers/${barberId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

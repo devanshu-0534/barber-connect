@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             // 2. Send the data to our new admin login endpoint
-            const response = await fetch('http://localhost:5000/api/users/admin/login', {
+            const response = await fetch('https://barber-connect-054c.onrender.com/api/users/admin/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

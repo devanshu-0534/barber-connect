@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 loadingOverlay.style.display = 'flex';
-                const response = await fetch('http://localhost:5000/api/barbers/register', { method: 'POST', body: formData });
+                const response = await fetch('https://barber-connect-054c.onrender.com/api/barbers/register', { method: 'POST', body: formData });
                 const data = await response.json();
                 if (!response.ok) { throw new Error(data.message || `Server error: ${response.status}`); }
                 window.location.href = 'registration-pending.html';
@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 loadingOverlay.style.display = 'flex';
-                const response = await fetch('http://localhost:5000/api/barbers/login', {
+                const response = await fetch('https://barber-connect-054c.onrender.com/api/barbers/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, password }),

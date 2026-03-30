@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const fetchApprovedBarbers = async () => {
         try {
             // 1. Call our new public API endpoint
-            const response = await fetch('http://localhost:5000/api/barbers');
+            const response = await fetch('https://barber-connect-054c.onrender.com/api/barbers');
             const data = await response.json();
 
             if (!data.success) {

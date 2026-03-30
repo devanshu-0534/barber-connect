@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // 2. Fetch the specific barber's profile data from the backend
     try {
-        const response = await fetch(`http://localhost:5000/api/barbers/${barberId}`);
+        const response = await fetch(`https://barber-connect-054c.onrender.com/api/barbers/${barberId}`);
         const data = await response.json();
 
         if (!data.success) {
