@@ -1,3 +1,47 @@
+// require('dotenv').config();
+
+// const express = require('express');
+// const cors = require('cors');
+// const connectDB = require('./config/db');
+// const path = require('path');
+
+// // This must be at the top to load the environment variables
+// connectDB();
+
+// // create instance/object of express
+// const app = express();
+// const PORT = process.env.PORT || 5000;
+
+// // --- Middlewares ---
+// app.use(cors({
+//   origin: "*"
+// }));
+// app.use(express.json());
+
+// // --- Serve Static Frontend Files ---
+// app.use(express.static(path.join(__dirname, 'frontend')));
+
+// // --- API Routes ---
+// app.use('/api/users', require('./routes/userRoutes'));
+// app.use('/api/barbers', require('./routes/barberRoutes'));
+// app.use('/api/admin', require('./routes/adminRoutes'));
+// app.use('/api/services', require('./routes/serviceRoutes'));
+// app.use('/api/appointments', require('./routes/appointmentRoutes'));
+
+// // --- Main Route ---
+// // THE FIX: We use a Regular Expression (/.*/) instead of a string path.
+// // This forces Express to match ANY url that hasn't been handled above
+// // and serve the index.html file. This works on all versions of Express.
+// app.get(/.*/, (req, res) => {
+//     res.sendFile(path.join(__dirname, '../frontend', 'index.html'));
+// });
+
+// app.listen(PORT, () => {
+//     console.log(`Backend server is running on http://localhost:${PORT}`)
+// });
+
+
+
 require('dotenv').config();
 
 const express = require('express');
@@ -5,20 +49,31 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 const path = require('path');
 
-// This must be at the top to load the environment variables
+// Connect DB
 connectDB();
 
-// create instance/object of express
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// --- Middlewares ---
+// --- ✅ CORS FIX (IMPORTANT) ---
 app.use(cors({
-  origin: "*"
+  origin: [
+    "https://barber-conect.netlify.app", // your Netlify frontend
+    "http://localhost:3000",             // local testing
+    "http://localhost:5000"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
 }));
-app.use(express.json());
 
-// --- Serve Static Frontend Files ---
+// ✅ Handle preflight requests (VERY IMPORTANT for CORS)
+app.options("*", cors());
+
+// --- Middlewares ---
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// --- Serve Static Frontend Files (optional) ---
 app.use(express.static(path.join(__dirname, 'frontend')));
 
 // --- API Routes ---
@@ -28,14 +83,17 @@ app.use('/api/admin', require('./routes/adminRoutes'));
 app.use('/api/services', require('./routes/serviceRoutes'));
 app.use('/api/appointments', require('./routes/appointmentRoutes'));
 
-// --- Main Route ---
-// THE FIX: We use a Regular Expression (/.*/) instead of a string path.
-// This forces Express to match ANY url that hasn't been handled above
-// and serve the index.html file. This works on all versions of Express.
-app.get(/.*/, (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend', 'index.html'));
+// --- Health Check Route (useful for Render debugging) ---
+app.get("/", (req, res) => {
+  res.send("API is running...");
 });
 
+// --- Catch-all Route (FIXED PATH) ---
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
+});
+
+// --- Start Server ---
 app.listen(PORT, () => {
-    console.log(`Backend server is running on http://localhost:${PORT}`)
+  console.log(`Backend server is running on port ${PORT}`);
 });
